@@ -1,0 +1,47 @@
+{
+  "name": "@dokuji/wares",
+  "version": "0.1.0",
+  "files": [
+    "dist"
+  ],
+  "main": "./dist/wares.umd.js",
+  "module": "./dist/wares.es.js",
+  "types": "./dist/main.d.ts",
+  "exports": {
+    ".": {
+      "import": "./dist/wares.es.js",
+      "require": "./dist/wares.umd.js"
+    }
+  },
+  "scripts": {
+    "test": "jest",
+    "build": "rm -rf dist/* && tsc && vite build",
+    "prepublishOnly": "npm run build"
+  },
+  "devDependencies": {
+    "@types/event-emitter": "^0.3.3",
+    "@types/jest": "^27.5.1",
+    "@types/lodash.clonedeep": "^4.5.7",
+    "@typescript-eslint/eslint-plugin": "^5.25.0",
+    "@typescript-eslint/parser": "^5.25.0",
+    "eslint": "^8.15.0",
+    "eslint-config-standard": "^17.0.0",
+    "eslint-plugin-import": "^2.26.0",
+    "eslint-plugin-jest": "^26.2.2",
+    "eslint-plugin-n": "^15.2.0",
+    "eslint-plugin-promise": "^6.0.0",
+    "jest": "^28.1.0",
+    "ts-jest": "^28.0.2",
+    "typescript": "^4.5.4",
+    "vite": "^2.9.9",
+    "vite-plugin-dts": "^1.1.1"
+  },
+  "dependencies": {
+    "event-emitter": "^0.3.5",
+    "immer": "^9.0.14",
+    "lodash.clonedeep": "^4.5.0"
+  },
+  "publishConfig": {
+    "registry": "https://npm.pkg.github.com/"
+  }
+}
