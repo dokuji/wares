@@ -3,7 +3,7 @@ export type { Emitter, EventListener } from './EventEmitter'
 export { EventEmitter, EventSubscription, TypedEventEmitter } from './EventEmitter'
 
 export type { StandardAction } from './Store'
-export { Store, AsyncStore } from './Store'
+export { Store, AsyncStore, BaseStore } from './Store'
 
 export type { IPersistConfig } from './Persisted'
 export { Persisted } from './Persisted'
