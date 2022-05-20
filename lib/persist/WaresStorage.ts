@@ -1,3 +1,4 @@
+import { aesGcmDecrypt, aesGcmEncrypt } from '../crypto'
 import { EventSubscription } from '../EventEmitter'
 import { AsyncStore, Store } from '../Store'
 import { OnHydrate, ParseStorage, StoreEvent } from '../types'
@@ -8,17 +9,22 @@ export class WaresStorage implements IWaresAsyncStorage {
   readonly key: string
   readonly storage: IStandardStorageApi
   readonly __isWaresStorage: boolean = true
+  readonly password: string | null = null
   subscription: EventSubscription | null = null
 
-  constructor (key: string, storage: IStandardStorageApi) {
+  constructor (key: string, storage: IStandardStorageApi, password: string | null = null) {
     this.key = key
     this.storage = storage
+    this.password = password
   }
 
   async get (): Promise<any> {
     try {
-      const stored = await this.storage.getItem(this.key)
+      let stored = await this.storage.getItem(this.key)
       if (stored == null) return null
+      if (this.password != null) {
+        stored = await aesGcmDecrypt(stored, this.password)
+      }
       return JSON.parse(stored)
     } catch (e) {
       return null
@@ -56,7 +62,11 @@ export class WaresStorage implements IWaresAsyncStorage {
 
   async persist (value: any): Promise<void> {
     try {
-      await this.storage.setItem(this.key, value)
+      let strValue = typeof value === 'string' ? value : JSON.stringify(value)
+      if (this.password != null) {
+        strValue = await aesGcmEncrypt(strValue, this.password)
+      }
+      await this.storage.setItem(this.key, strValue)
     } catch (_) {
     }
     return undefined

@@ -131,13 +131,43 @@ test('persisted changes', async () => {
   store.dispatch({ type: 'set', payload: 100 })
   expect(store.state.c).toBe(100)
   await sleep(100)
-  const storaged = await persitedStorage.get()
-  expect(storaged).toEqual({
+  const expected = {
     a: false,
     b: 'b',
     c: 100,
     o: {
       x: true
     }
-  })
+  }
+  const rawStoraged = await persitedStorage.storage.getItem(persitedStorage.key) || ''
+  expect(rawStoraged[0]).toBe('{')
+  expect(JSON.parse(rawStoraged)).toEqual(expected)
+  const storaged = await persitedStorage.get()
+  expect(storaged).toEqual(expected)
+})
+
+const encryptedStorage = Persisted(store, {
+  name: 'encryptedPersisted',
+  password: 'storage-password',
+  storage: MemoryStorage
+})
+
+test('encrypted persisted storage', async () => {
+  store.dispatch({ type: 'set', payload: 200 })
+  expect(store.state.c).toBe(200)
+  await sleep(100)
+  const expected = {
+    a: false,
+    b: 'b',
+    c: 200,
+    o: {
+      x: true
+    }
+  }
+  const rawStoraged = await encryptedStorage.storage
+    .getItem(encryptedStorage.key) || ''
+  expect(rawStoraged[0]).not.toBe('{')
+  expect(() => JSON.parse(rawStoraged)).toThrow()
+  const storaged = await encryptedStorage.get()
+  expect(storaged).toEqual(expected)
 })

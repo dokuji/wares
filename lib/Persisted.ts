@@ -9,6 +9,10 @@ import { wrapAsyncStorage } from './persist/AsyncStorageWrapper'
 
 export interface IPersistConfig<State> {
   name: string,
+  /**
+   * AES-GCM encryption of the persisted data with password
+   */
+  password?: string,
   storage?: AnyStorage,
   parseStorage?: ParseStorage<State>
   onHydrate?: OnHydrate<State>
@@ -46,7 +50,7 @@ export function Persisted<State, A extends StandardAction> (
     if (storageApi == null) {
       throw new Error('Could not initialize storage for PersistedStore')
     }
-    storage = new WaresStorage(conf.name, storageApi)
+    storage = new WaresStorage(conf.name, storageApi, conf.password ?? null)
   }
 
   storage.subscribe(
