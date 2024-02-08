@@ -1,14 +1,14 @@
 import dts from 'vite-plugin-dts'
-const path = require('path')
-const { defineConfig } = require('vite')
+import path from 'path'
+import { defineConfig } from 'vite'
 
-module.exports = defineConfig({
+export default defineConfig({
   build: {
     sourcemap: true,
     lib: {
       entry: path.resolve(__dirname, 'lib/main.ts'),
       name: 'Wares',
-      fileName: (format) => `wares.${format}.js`
+      fileName: 'wares'
     },
     rollupOptions: {
       // make sure to externalize deps that shouldn't be bundled

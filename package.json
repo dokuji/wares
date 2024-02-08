@@ -1,16 +1,17 @@
 {
   "name": "@dokuji/wares",
-  "version": "0.2.1",
+  "version": "0.2.2",
   "files": [
     "dist"
   ],
-  "main": "./dist/wares.umd.js",
-  "module": "./dist/wares.es.js",
+  "type": "module",
+  "main": "./dist/wares.umd.cjs",
+  "module": "./dist/wares.js",
   "types": "./dist/main.d.ts",
   "exports": {
     ".": {
-      "import": "./dist/wares.es.js",
-      "require": "./dist/wares.umd.js"
+      "import": "./dist/wares.js",
+      "require": "./dist/wares.umd.cjs"
     }
   },
   "scripts": {
@@ -23,7 +24,7 @@
     "@types/event-emitter": "^0.3.3",
     "@types/jest": "^27.5.1",
     "@types/lodash.clonedeep": "^4.5.7",
-    "@types/node": "^17.0.35",
+    "@types/node": "^18.19.14",
     "@typescript-eslint/eslint-plugin": "^5.25.0",
     "@typescript-eslint/parser": "^5.25.0",
     "eslint": "^8.15.0",
@@ -35,7 +36,7 @@
     "jest": "^28.1.0",
     "ts-jest": "^28.0.2",
     "typescript": "^4.5.4",
-    "vite": "^2.9.9",
+    "vite": "^5.1.0",
     "vite-plugin-dts": "^1.1.1"
   },
   "dependencies": {
